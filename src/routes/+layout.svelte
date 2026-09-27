@@ -1,0 +1,92 @@
+<script lang="ts">
+	import './layout.css';
+	import favicon from '$lib/assets/favicon.svg';
+	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
+	import { site, intro, links, projects } from '$lib/site';
+
+	let { children } = $props();
+
+	const home = $derived(page.url.pathname === resolve('/'));
+	const isCurrent = (slug: string) =>
+		page.url.pathname === resolve('/work/[slug]', { slug });
+</script>
+
+<svelte:head>
+	<link rel="icon" href={favicon} />
+	<meta name="description" content={site.description} />
+</svelte:head>
+
+<div
+	class="min-h-dvh bg-ink font-sans text-fg antialiased lg:grid lg:grid-cols-[minmax(20rem,28vw)_1fr]"
+>
+	<!-- Sticky and independently scrollable on desktop, like a table of contents.
+	     On phones it's a plain header, and the project list only shows on the
+	     homepage so a project page opens on its work. -->
+	<aside
+		class="px-5 pt-5 lg:sticky lg:top-0 lg:h-dvh lg:overflow-y-auto lg:pb-8"
+		aria-label="About and projects"
+	>
+		<p class="text-[1.375rem] leading-[1.3] tracking-[-0.01em] text-pretty">
+			{#each intro as part, i (i)}
+				{#if i === 0}
+					<a href={resolve('/')} class="text-dim transition-colors hover:text-fg">{part.text}</a>
+				{:else if part.muted}
+					<span class="text-dim">{part.text}</span>
+				{:else}
+					{part.text}
+				{/if}
+			{/each}
+		</p>
+
+		<nav aria-label="Projects" class="mt-4" class:max-lg:hidden={!home}>
+			<ul class="border-t border-rule">
+				{#each projects as project (project.slug)}
+					<li class="border-b border-rule">
+						<a
+							href={resolve('/work/[slug]', { slug: project.slug })}
+							aria-current={isCurrent(project.slug) ? 'page' : undefined}
+							class="group flex items-baseline gap-2 py-3 text-[0.95rem] leading-tight"
+						>
+							<span
+								class="shrink-0 transition-colors group-hover:text-white group-aria-[current=page]:text-white"
+							>
+								{project.label}
+							</span>
+							<span
+								class="truncate font-mono text-[0.8rem] text-dim transition-colors group-hover:text-fg group-aria-[current=page]:text-fg"
+							>
+								{project.subtitle}
+							</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</nav>
+
+		<ul class="mt-4 space-y-0.5 text-[0.95rem] max-lg:hidden">
+			{#each links as link (link.href)}
+				<li>
+					<a href={link.href} rel="external" class="transition-colors hover:text-white">
+						{link.label === 'Email' ? site.email : link.label}
+					</a>
+				</li>
+			{/each}
+		</ul>
+	</aside>
+
+	<main class="min-w-0 px-5 pt-5 pb-16">
+		{@render children()}
+
+		<!-- The sidebar's links, repeated where phones will find them. -->
+		<ul class="mt-16 space-y-0.5 text-[0.95rem] lg:hidden">
+			{#each links as link (link.href)}
+				<li>
+					<a href={link.href} rel="external">
+						{link.label === 'Email' ? site.email : link.label}
+					</a>
+				</li>
+			{/each}
+		</ul>
+	</main>
+</div>
