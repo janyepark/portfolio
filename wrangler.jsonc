@@ -1,11 +1,17 @@
 {
 	// Assets-only Worker: no `main`, no Worker code. SvelteKit's adapter-static
 	// prerenders every route into ./build, which Cloudflare serves directly.
-	// Videos are not in here — they're in the R2 bucket below, served from
-	// media.janyepark.com. See the README.
+	// Videos are not in here — they're in the R2 bucket `portfolio-media`,
+	// served from media.plainjane.work. See the README.
 	"name": "portfolio",
 	"compatibility_date": "2026-09-01",
 	"assets": {
 		"directory": "./build"
-	}
+	},
+	// Served only on the custom domains, not on a workers.dev address.
+	"workers_dev": false,
+	"routes": [
+		{ "pattern": "plainjane.work", "custom_domain": true },
+		{ "pattern": "www.plainjane.work", "custom_domain": true }
+	]
 }

@@ -11,7 +11,7 @@ export const site = {
 	tagline: 'Film, motion & graphic design',
 	description:
 		'Portfolio of Janye Park — editor, motion designer and graphic designer working across film, campaigns and brand identity.',
-	url: 'https://janyepark.com',
+	url: 'https://plainjane.work',
 	// TODO: replace with the real address.
 	email: 'hello@janyepark.com'
 };
@@ -37,7 +37,7 @@ export const intro: { text: string; muted?: boolean }[] = [
  * README. In dev, vite.config.ts serves ../portfolio-media at /media instead,
  * so nothing has to be uploaded to preview locally.
  */
-export const mediaOrigin = dev ? '/media' : 'https://media.janyepark.com';
+export const mediaOrigin = dev ? '/media' : 'https://media.plainjane.work';
 
 /** Absolute URL for a video's `src`. */
 export const videoUrl = (item: Extract<Media, { kind: 'video' }>) => mediaOrigin + item.src;

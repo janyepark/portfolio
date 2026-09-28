@@ -37,12 +37,21 @@ nothing has to be uploaded to preview.
 
 ## Deploy
 
+Live at https://plainjane.work (and `www.`), an assets-only Cloudflare Worker on Janye's account.
+
+**Site:** pushing to `main` deploys it. Cloudflare Workers Builds is connected to this repo and runs
+`bun run build`, then `npx wrangler deploy`. To deploy by hand instead:
+
 ```sh
-bun run build                                  # static site in ./build
-bunx wrangler deploy                           # site → Workers static assets
-./scripts/upload-media.sh                      # videos → R2 (only when they change)
+bun run build
+bunx wrangler deploy
 ```
 
-Videos are too large for the repo or for Workers static assets (25 MiB per file), so they live in
-an R2 bucket, `portfolio-media`, exposed on the custom domain `media.janyepark.com`. The site
-points at it through `mediaOrigin` in `src/lib/site.ts`.
+**Videos** are too large for the repo or for Workers static assets (25 MiB per file), so they live
+in the R2 bucket `portfolio-media`, served from `media.plainjane.work`. The site points at it
+through `mediaOrigin` in `src/lib/site.ts`. After `bun run build:media` produces new or changed
+videos, upload them, then push the regenerated `src/lib/generated/media.ts`:
+
+```sh
+./scripts/upload-media.sh
+```
