@@ -12,8 +12,7 @@ export const site = {
 	description:
 		'Portfolio of Janye Park — editor, motion designer and graphic designer working across film, campaigns and brand identity.',
 	url: 'https://plainjane.work',
-	// TODO: replace with the real address.
-	email: 'hello@janyepark.com'
+	email: 'jparkk215@gmail.com'
 };
 
 /**
