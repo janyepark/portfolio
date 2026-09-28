@@ -28,8 +28,9 @@
 </a>
 
 <article>
-	<!-- Two columns, like a credit block: the facts on the left, the story on the right. -->
-	<header class="grid gap-x-8 gap-y-6 pb-10 text-[0.95rem] leading-snug md:grid-cols-2 md:pb-14">
+	<!-- Two columns, like a credit block: the facts on the left, the story on the right.
+	     The space under it matches the gap between the media below. -->
+	<header class="grid gap-x-8 gap-y-6 pb-2 text-[0.95rem] leading-snug md:grid-cols-2">
 		<div>
 			<p>{project.year}</p>
 			<h1 class="text-[1.375rem] leading-tight font-medium tracking-[-0.01em] text-white">
