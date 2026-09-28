@@ -6,11 +6,11 @@ import { media as allMedia, type Media } from '$lib/generated/media';
 export type { Media };
 
 export const site = {
-	name: 'Janye Park',
-	title: 'Janye Park',
+	name: 'Jane Park',
+	title: 'Jane Park',
 	tagline: 'Film, motion & graphic design',
 	description:
-		'Portfolio of Janye Park — editor, motion designer and graphic designer working across film, campaigns and brand identity.',
+		'Portfolio of Jane Park — editor, motion designer and graphic designer working across film, campaigns and brand identity.',
 	url: 'https://plainjane.work',
 	email: 'jparkk215@gmail.com'
 };

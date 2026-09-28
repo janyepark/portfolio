@@ -1,6 +1,6 @@
 # portfolio
 
-Janye Park's portfolio. SvelteKit + Tailwind, statically prerendered, running on Bun, hosted on
+Jane Park's portfolio. SvelteKit + Tailwind, statically prerendered, running on Bun, hosted on
 Cloudflare: the site on Workers static assets, the videos in R2.
 
 ## Develop
@@ -37,7 +37,7 @@ nothing has to be uploaded to preview.
 
 ## Deploy
 
-Live at https://plainjane.work (and `www.`), an assets-only Cloudflare Worker on Janye's account.
+Live at https://plainjane.work (and `www.`), an assets-only Cloudflare Worker on Jane's account.
 
 **Site:** pushing to `main` deploys it. Cloudflare Workers Builds is connected to this repo and runs
 `bun run build`, then `npx wrangler deploy`. To deploy by hand instead:
