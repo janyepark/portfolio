@@ -30,6 +30,13 @@
 			{#each intro as part, i (i)}
 				{#if i === 0}
 					<a href={resolve('/')} class="text-dim transition-colors hover:text-fg">{part.text}</a>
+				{:else if part.href}
+					<a
+						href={part.href}
+						target="_blank"
+						rel="external noopener"
+						class="text-dim transition-colors hover:text-fg">{part.text}</a
+					>
 				{:else if part.muted}
 					<span class="text-dim">{part.text}</span>
 				{:else}

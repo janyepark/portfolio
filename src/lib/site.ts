@@ -17,18 +17,21 @@ export const site = {
 
 /**
  * The sidebar's opening sentence. `muted` parts render grey, like the names in
- * it. TODO: check the current/previous employers — inferred from project years.
+ * it; an `href` makes a part a link to that site. TODO: check the
+ * current/previous employers — inferred from project years — and add District
+ * 5's site once known.
  */
-export const intro: { text: string; muted?: boolean }[] = [
+export const intro: { text: string; muted?: boolean; href?: string }[] = [
 	{ text: site.name, muted: true },
 	{
 		text: ' is an editor, motion designer and graphic designer working across film, campaigns and brand identity. Currently at '
 	},
-	{ text: 'TBK Holding', muted: true },
+	{ text: 'TBK Holding', muted: true, href: 'https://www.tbkholding.com/' },
 	{ text: '. Previously at ' },
-	{ text: 'Reingold', muted: true },
+	{ text: 'Reingold', muted: true, href: 'https://www.reingold.com/' },
 	{ text: ' & ' },
-	{ text: 'District 5.', muted: true }
+	{ text: 'District 5', muted: true },
+	{ text: '.' }
 ];
 
 /**
@@ -276,7 +279,6 @@ const projectList: Project[] = [
 ];
 
 export const projects = projectList.filter((project) => !project.hidden);
-
 
 /** A project's media, from the generated manifest. */
 export function mediaFor(project: Project): Media[] {
