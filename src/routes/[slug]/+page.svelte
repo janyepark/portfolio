@@ -65,7 +65,7 @@
 
 <nav class="mt-16 border-t border-rule pt-4" aria-label="Next project">
 	<a
-		href={resolve('/work/[slug]', { slug: next.slug })}
+		href={resolve('/[slug]', { slug: next.slug })}
 		class="group flex items-baseline gap-2 text-[0.95rem]"
 	>
 		<span class="font-mono text-[0.8rem] text-dim">Next</span>

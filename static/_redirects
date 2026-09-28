@@ -1,0 +1,3 @@
+# Project pages lived under /work/ before they moved to the root. Only
+# single-segment paths match, so media under /work/<slug>/ is unaffected.
+/work/:slug /:slug 301

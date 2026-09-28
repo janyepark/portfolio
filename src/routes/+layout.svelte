@@ -8,8 +8,7 @@
 	let { children } = $props();
 
 	const home = $derived(page.url.pathname === resolve('/'));
-	const isCurrent = (slug: string) =>
-		page.url.pathname === resolve('/work/[slug]', { slug });
+	const isCurrent = (slug: string) => page.url.pathname === resolve('/[slug]', { slug });
 </script>
 
 <svelte:head>
@@ -44,7 +43,7 @@
 				{#each projects as project (project.slug)}
 					<li class="border-b border-rule">
 						<a
-							href={resolve('/work/[slug]', { slug: project.slug })}
+							href={resolve('/[slug]', { slug: project.slug })}
 							aria-current={isCurrent(project.slug) ? 'page' : undefined}
 							class="group flex items-baseline gap-2 py-3 text-[0.95rem] leading-tight"
 						>

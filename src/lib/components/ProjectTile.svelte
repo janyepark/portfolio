@@ -41,7 +41,7 @@
 </script>
 
 <a
-	href={resolve('/work/[slug]', { slug: project.slug })}
+	href={resolve('/[slug]', { slug: project.slug })}
 	use:reveal={{ delay }}
 	onpointerenter={() => preview(true)}
 	onpointerleave={() => preview(false)}
