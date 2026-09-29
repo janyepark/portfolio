@@ -40,15 +40,19 @@ const VIDEO_EDGE = 1920;
 
 type Source =
 	/** `posterAt` picks the poster frame, in seconds, when the default lands on a title card or black. */
-	| { file: string; caption?: string; posterAt?: number }
+	| { file: string; posterAt?: number }
 	/** Every page of a PDF becomes its own still. */
-	| { pdf: string; caption?: string };
+	| { pdf: string };
 
 /**
  * What to take from each project folder, in display order. The `-compressed`
  * duplicates are left out on purpose: re-encoding from the original looks
  * better than re-encoding an already-compressed copy.
  */
+/** `1.mp4` … `n.mp4`, with poster times (seconds) for any that need picking by hand. */
+const numbered = (count: number, posterAt: Record<number, number> = {}): Source[] =>
+	Array.from({ length: count }, (_, i) => ({ file: `${i + 1}.mp4`, posterAt: posterAt[i + 1] }));
+
 /**
  * `draft` projects are skipped entirely: anything written to static/ ships with
  * the site and is public at its URL, even if no page links to it. Remove the
@@ -57,35 +61,31 @@ type Source =
 const projects: Record<string, { dir: string; items: Source[]; draft?: boolean }> = {
 	'curb-the-crisis': {
 		dir: 'Curb The Crisis',
-		items: [
-			{ file: '2 min.mp4', caption: '2-minute documentary cut' },
-			{ file: '30 sec.mp4', caption: '30-second social cut' },
-			{ file: '6 sec.mp4', caption: '6-second animation' }
-		]
+		items: [{ file: '2 min.mp4' }, { file: '30 sec.mp4' }, { file: '6 sec.mp4' }]
 	},
 	'mjff-parkinsons-act': {
 		dir: 'MJFF Pro Bono Video',
-		items: [{ file: 'MJFF Case Study.mp4' }, { file: 'MJF-Shoot_Ted-2_110624.jpg' }]
+		items: [{ file: 'MJFF Case Study.mp4', posterAt: 112 }, { file: 'MJF-Shoot_Ted-2_110624.jpg' }]
 	},
 	'nc-safe': {
 		dir: 'NC SAFE',
-		items: ['1', '2', '3', '4', '5'].map((n) => ({ file: `${n}.mp4` }))
+		items: numbered(5, { 5: 3.8 })
 	},
 	'vim-open-enrollment': {
 		dir: 'VIM Ad Campaign',
-		items: ['1', '2', '3', '4', '5'].map((n) => ({ file: `${n}.mp4` }))
+		items: numbered(5, { 2: 21.1 })
 	},
 	'usda-cep': {
 		dir: 'USDA',
-		items: ['1', '2', '3'].map((n) => ({ file: `${n}.mp4` }))
+		items: numbered(3, { 3: 187.1 })
 	},
 	'sofar-sounds': {
 		dir: 'Sofar Sounds',
 		items: [
-			{ file: 'Parisalexa Performance.mp4', caption: 'Parisalexa — performance' },
-			{ file: 'TeZA Talks Interview.mp4', caption: 'TeZA — interview' },
-			{ file: 'toronto_performance_jordan_v02.mov', caption: 'Toronto — performance' },
-			{ file: 'nashville_short_10s_v01.mov', caption: 'Nashville — 10-second social cut' }
+			{ file: 'Parisalexa Performance.mp4', posterAt: 177.6 },
+			{ file: 'TeZA Talks Interview.mp4' },
+			{ file: 'toronto_performance_jordan_v02.mov' },
+			{ file: 'nashville_short_10s_v01.mov' }
 		]
 	},
 	'red-bull-gives-you-slides': {
@@ -98,7 +98,7 @@ const projects: Record<string, { dir: string; items: Source[]; draft?: boolean }
 	ramenya: {
 		dir: 'Ramenya',
 		items: [
-			{ file: 'ramenya promo.mp4', caption: 'Kitchen BTS film' },
+			{ file: 'ramenya promo.mp4', posterAt: 51.6 },
 			...['1', '2', '3', '4', '5'].map((n) => ({ pdf: `${n}.pdf` }))
 		]
 	},
@@ -116,12 +116,11 @@ const projects: Record<string, { dir: string; items: Source[]; draft?: boolean }
 	},
 	kokodak: {
 		dir: 'Kokodak INCOMPLETE DO LAST',
-		draft: true,
-		items: [{ file: '2.mp4', caption: 'In-kiosk motion loop' }, { pdf: 'test.pdf' }]
+		items: [{ file: '2.mp4' }, { pdf: 'test.pdf' }]
 	},
 	ksa: {
 		dir: 'KSA',
-		items: ['1', '2', '3', '4', '5'].map((n) => ({ file: `${n}.mp4` }))
+		items: numbered(5, { 1: 179.1 })
 	},
 	'freelance-film': {
 		dir: 'Freelance Film',
@@ -139,7 +138,6 @@ type Media =
 			width: number;
 			height: number;
 			tone: string;
-			caption?: string;
 	  }
 	| {
 			kind: 'video';
@@ -151,7 +149,6 @@ type Media =
 			tone: string;
 			/** Seconds. */
 			duration: number;
-			caption?: string;
 	  };
 
 const VIDEO = /\.(mp4|mov|m4v)$/i;
@@ -176,7 +173,9 @@ async function webReady(path: string) {
 		await $`ffprobe -v error -show_entries stream=codec_type,codec_name,pix_fmt,width,height,avg_frame_rate -of json ${path}`.json();
 	const video = streams.find((s: { codec_type: string }) => s.codec_type === 'video');
 	const audio = streams.find((s: { codec_type: string }) => s.codec_type === 'audio');
-	const [num, den] = String(video?.avg_frame_rate ?? '0/1').split('/').map(Number);
+	const [num, den] = String(video?.avg_frame_rate ?? '0/1')
+		.split('/')
+		.map(Number);
 	return (
 		video?.codec_name === 'h264' &&
 		video.pix_fmt === 'yuv420p' &&
@@ -188,9 +187,10 @@ async function webReady(path: string) {
 
 /** Average colour, painted behind the media until it loads. */
 async function tone(path: string) {
-	const buf = await $`ffmpeg -v error -i ${path} -vf scale=1:1 -frames:v 1 -f rawvideo -pix_fmt rgb24 -`
-		.quiet()
-		.arrayBuffer();
+	const buf =
+		await $`ffmpeg -v error -i ${path} -vf scale=1:1 -frames:v 1 -f rawvideo -pix_fmt rgb24 -`
+			.quiet()
+			.arrayBuffer();
 	const [r, g, b] = new Uint8Array(buf);
 	return '#' + [r, g, b].map((c) => c.toString(16).padStart(2, '0')).join('');
 }
@@ -208,7 +208,7 @@ async function toWebp(input: string, output: string) {
 	rmSync(tmp, { recursive: true });
 }
 
-async function still(input: string, slug: string, name: string, caption?: string): Promise<Media> {
+async function still(input: string, slug: string, name: string): Promise<Media> {
 	const output = join(STATIC_OUT, 'work', slug, `${name}.webp`);
 	await toWebp(input, output);
 	const { width, height } = await probe(output);
@@ -217,18 +217,11 @@ async function still(input: string, slug: string, name: string, caption?: string
 		src: `/work/${slug}/${name}.webp`,
 		width,
 		height,
-		tone: await tone(output),
-		...(caption && { caption })
+		tone: await tone(output)
 	};
 }
 
-async function video(
-	input: string,
-	slug: string,
-	name: string,
-	caption?: string,
-	posterAt?: number
-): Promise<Media> {
+async function video(input: string, slug: string, name: string, posterAt?: number): Promise<Media> {
 	const output = join(VIDEO_OUT, 'work', slug, `${name}.mp4`);
 	mkdirSync(join(VIDEO_OUT, 'work', slug), { recursive: true });
 
@@ -268,12 +261,11 @@ async function video(
 		width,
 		height,
 		tone: await tone(poster),
-		duration: Math.round(duration),
-		...(caption && { caption })
+		duration: Math.round(duration)
 	};
 }
 
-async function pdfPages(input: string, slug: string, prefix: string, caption?: string) {
+async function pdfPages(input: string, slug: string, prefix: string) {
 	const tmp = mkdtempSync(join(tmpdir(), 'pdf-'));
 	await $`pdftoppm -png -scale-to ${STILL_EDGE} ${input} ${join(tmp, 'page')}`;
 	const pages = readdirSync(tmp)
@@ -283,7 +275,7 @@ async function pdfPages(input: string, slug: string, prefix: string, caption?: s
 	const out: Media[] = [];
 	for (const [i, page] of pages.entries()) {
 		const name = pages.length === 1 ? prefix : `${prefix}-${i + 1}`;
-		out.push(await still(join(tmp, page), slug, name, caption));
+		out.push(await still(join(tmp, page), slug, name));
 	}
 	rmSync(tmp, { recursive: true });
 	return out;
@@ -308,11 +300,11 @@ for (const [slug, { dir, items, draft }] of Object.entries(projects)) {
 	for (const [i, item] of items.entries()) {
 		const name = String(i + 1).padStart(2, '0');
 		if ('pdf' in item) {
-			media.push(...(await pdfPages(join(SOURCE, dir, item.pdf), slug, name, item.caption)));
+			media.push(...(await pdfPages(join(SOURCE, dir, item.pdf), slug, name)));
 		} else if (VIDEO.test(item.file)) {
-			media.push(await video(join(SOURCE, dir, item.file), slug, name, item.caption, item.posterAt));
+			media.push(await video(join(SOURCE, dir, item.file), slug, name, item.posterAt));
 		} else {
-			media.push(await still(join(SOURCE, dir, item.file), slug, name, item.caption));
+			media.push(await still(join(SOURCE, dir, item.file), slug, name));
 		}
 	}
 
@@ -325,7 +317,7 @@ writeFileSync(
 	`// Generated by scripts/build-media.ts — do not edit by hand.
 
 export type Media =
-	| { kind: 'image'; src: string; width: number; height: number; tone: string; caption?: string }
+	| { kind: 'image'; src: string; width: number; height: number; tone: string }
 	| {
 			kind: 'video';
 			/** Path under the media origin (R2), not the site. */
@@ -336,7 +328,6 @@ export type Media =
 			tone: string;
 			/** Seconds. */
 			duration: number;
-			caption?: string;
 	  };
 
 export const media: Record<string, Media[]> = ${JSON.stringify(manifest, null, '\t')};

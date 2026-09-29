@@ -56,9 +56,6 @@
 			{/key}
 
 			<figcaption class="flex items-baseline gap-3 text-sm">
-				{#if current.caption}
-					<span class="font-medium">{current.caption}</span>
-				{/if}
 				<span class="text-white/40 tabular-nums">{(index ?? 0) + 1}/{photos.length}</span>
 			</figcaption>
 		</figure>

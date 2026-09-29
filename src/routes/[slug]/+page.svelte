@@ -1,13 +1,21 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { site, mediaFor, coverFor } from '$lib/site';
+	import { site, heroFor, restFor, stillOf } from '$lib/site';
 	import MediaGallery from '$lib/components/MediaGallery.svelte';
 
 	let { data } = $props();
 
 	const project = $derived(data.project);
 	const next = $derived(data.next);
-	const cover = $derived(coverFor(project));
+	const hero = $derived(heroFor(project));
+	const rest = $derived(restFor(project));
+
+	const credits = $derived([
+		{ label: 'Client', value: project.client },
+		{ label: 'Agency', value: project.agency },
+		{ label: 'Role', value: project.role },
+		{ label: 'Discipline', value: project.discipline.join(', ') }
+	]);
 </script>
 
 <svelte:head>
@@ -15,63 +23,57 @@
 	<meta name="description" content={project.description} />
 	<meta property="og:title" content={project.title} />
 	<meta property="og:description" content={project.description} />
-	{#if cover}
-		<meta property="og:image" content={site.url + cover.src} />
+	{#if hero}
+		<meta property="og:image" content={site.url + stillOf(hero)} />
 	{/if}
 </svelte:head>
 
 <a
 	href={resolve('/')}
-	class="mb-4 inline-block font-mono text-[0.8rem] text-dim transition-colors hover:text-fg lg:hidden"
+	class="mb-4 inline-block text-[1.125rem] text-dim italic transition-colors hover:text-fg lg:hidden"
 >
 	← All projects
 </a>
 
 <article>
-	<!-- Two columns, like a credit block: the facts on the left, the story on the right.
-	     The space under it matches the gap between the media below. -->
-	<header class="grid gap-x-8 gap-y-6 pb-2 text-[0.95rem] leading-snug md:grid-cols-2">
+	{#if hero}
+		<MediaGallery items={[hero]} title={project.title} priority />
+	{/if}
+
+	<!-- Two columns: the story on the left, the credits and tools on the right. -->
+	<header class="grid gap-x-10 gap-y-6 py-10 text-[1.25rem] leading-snug md:grid-cols-2">
 		<div>
 			<p>{project.year}</p>
-			<h1 class="text-[1.375rem] leading-tight font-medium tracking-[-0.01em] text-white">
-				{project.title}
-			</h1>
-
-			<dl class="mt-4">
-				<div class="flex gap-1.5">
-					<dt class="sr-only">Client</dt>
-					<dd>{project.client}</dd>
-				</div>
-				<div class="flex gap-1.5">
-					<dt class="text-dim">Agency —</dt>
-					<dd>{project.agency}</dd>
-				</div>
-				<div class="flex gap-1.5">
-					<dt class="text-dim">Role —</dt>
-					<dd>{project.role}</dd>
-				</div>
-			</dl>
-
-			<p class="mt-4 font-mono text-[0.8rem] text-dim">{project.tools.join(', ')}</p>
+			<h1 class="text-[1.75rem] leading-tight italic">{project.title}</h1>
+			<p class="mt-3 max-w-xl text-pretty">{project.description}</p>
 		</div>
 
-		<div class="max-w-xl">
-			<p class="text-pretty">{project.description}</p>
-			<p class="mt-4 text-dim italic">{project.discipline.join(', ')}</p>
+		<div>
+			<dl>
+				{#each credits as credit (credit.label)}
+					<div>
+						<dt class="inline">{credit.label} —</dt>
+						<dd class="inline">{credit.value}</dd>
+					</div>
+				{/each}
+			</dl>
+			<p class="mt-4 italic">{project.tools.join(', ')}</p>
 		</div>
 	</header>
 
-	<MediaGallery items={mediaFor(project)} title={project.title} />
+	{#if rest.length}
+		<MediaGallery items={rest} title={project.title} />
+	{/if}
 </article>
 
 <nav class="mt-16 border-t border-rule pt-4" aria-label="Next project">
 	<a
 		href={resolve('/[slug]', { slug: next.slug })}
-		class="group flex items-baseline gap-2 text-[0.95rem]"
+		class="group flex items-baseline gap-2 text-[1.25rem]"
 	>
-		<span class="font-mono text-[0.8rem] text-dim">Next</span>
-		<span class="transition-colors group-hover:text-white">{next.label}</span>
-		<span class="font-mono text-[0.8rem] text-dim">{next.subtitle}</span>
+		<span class="text-dim italic">Next</span>
+		<span class="transition-colors group-hover:text-dim">{next.label}</span>
+		<span class="text-dim italic">{next.subtitle}</span>
 		<span class="ml-auto transition-transform group-hover:translate-x-1">→</span>
 	</a>
 </nav>

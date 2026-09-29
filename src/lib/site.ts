@@ -8,31 +8,31 @@ export type { Media };
 export const site = {
 	name: 'Jane Park',
 	title: 'Jane Park',
-	tagline: 'Film, motion & graphic design',
+	tagline: 'Video, motion & graphic design',
 	description:
-		'Portfolio of Jane Park — editor, motion designer and graphic designer working across film, campaigns and brand identity.',
+		'Portfolio of Jane Park — multidisciplinary designer and filmmaker working across video, motion, and graphic design.',
 	url: 'https://plainjane.work',
 	email: 'jparkk215@gmail.com'
 };
 
 /**
- * The sidebar's opening sentence. `muted` parts render grey, like the names in
- * it; an `href` makes a part a link to that site. TODO: check the
- * current/previous employers — inferred from project years — and add District
- * 5's site once known.
+ * The sidebar's opening sentence. A `color` part is one of the names in it,
+ * each in its own colour (tokens in layout.css); an `href` makes it a link.
+ * TODO: add District 5's site once known.
  */
-export const intro: { text: string; muted?: boolean; href?: string }[] = [
-	{ text: site.name, muted: true },
-	{
-		text: ' is an editor, motion designer and graphic designer working across film, campaigns and brand identity. Currently at '
-	},
-	{ text: 'TBK Holding', muted: true, href: 'https://www.tbkholding.com/' },
-	{ text: '. Previously at ' },
-	{ text: 'Reingold', muted: true, href: 'https://www.reingold.com/' },
-	{ text: ' & ' },
-	{ text: 'District 5', muted: true },
-	{ text: '.' }
-];
+export const intro: { text: string; color?: 'yellow' | 'green' | 'red' | 'blue'; href?: string }[] =
+	[
+		{ text: site.name, color: 'yellow' },
+		{
+			text: ' is a multidisciplinary designer and filmmaker working across video, motion, and graphic design. Currently at '
+		},
+		{ text: 'TBK Holding', color: 'green', href: 'https://www.tbkholding.com/' },
+		{ text: '. Previously at ' },
+		{ text: 'Reingold', color: 'red', href: 'https://www.reingold.com/' },
+		{ text: ' & ' },
+		{ text: 'District 5', color: 'blue' },
+		{ text: '.' }
+	];
 
 /**
  * Where videos are served from. They live in R2, not in the site — see the
@@ -46,8 +46,8 @@ export const videoUrl = (item: Extract<Media, { kind: 'video' }>) => mediaOrigin
 
 // Outbound links only — these render with rel="external".
 export const links = [
-	// TODO: add LinkedIn, Instagram, Vimeo, etc.
-	{ href: `mailto:${site.email}`, label: 'Email' }
+	{ href: `mailto:${site.email}`, label: 'Email' },
+	{ href: 'https://www.linkedin.com/in/janepark215', label: 'LinkedIn' }
 ];
 
 export const disciplines = ['Film', 'Motion Design', 'Graphic Design', 'Photography'] as const;
@@ -58,7 +58,7 @@ export type Project = {
 	title: string;
 	/** Sidebar name — usually the client, short enough for one line. */
 	label: string;
-	/** Grey mono text after the label in the sidebar. */
+	/** Grey text after the label in the sidebar. */
 	subtitle: string;
 	discipline: Discipline[];
 	/** Who the work was done through — an agency, employer, or "Freelance". */
@@ -68,8 +68,11 @@ export type Project = {
 	role: string;
 	description: string;
 	tools: string[];
-	/** Index into the project's media to use on cards. Defaults to the first. */
-	cover?: number;
+	/**
+	 * Index into the project's media of its hero: shown above the project's
+	 * text, and as the project's feature on the homepage. Defaults to the first.
+	 */
+	hero?: number;
 	/** Kept out of every listing and not prerendered. Flip off to publish. */
 	hidden?: boolean;
 };
@@ -77,62 +80,34 @@ export type Project = {
 /** In display order, in the sidebar and on the homepage. */
 const projectList: Project[] = [
 	{
-		slug: 'mjff-parkinsons-act',
-		title: "Passing the National Plan to End Parkinson's Act",
-		label: 'Michael J. Fox Foundation',
-		subtitle: 'Case Study',
-		discipline: ['Film', 'Motion Design'],
-		agency: 'Reingold',
-		client: 'Michael J. Fox Foundation',
-		year: '2024',
-		role: '1st Editor, Motion Designer',
-		description:
-			"A documentary case study on the passage of the National Plan to End Parkinson's Act, combining interview footage with legislative graphics and data overlays to tell the story of the advocacy campaign's impact.",
-		tools: ['Adobe After Effects', 'Adobe Premiere Pro'],
-		// The video opens on a logo card; the shoot photo reads better as a tile.
-		cover: 1
-	},
-	{
-		slug: 'curb-the-crisis',
-		title: 'Curb The Crisis — Recovery Stories',
-		label: 'Curb The Crisis',
-		subtitle: 'Recovery Stories',
-		discipline: ['Film', 'Motion Design'],
-		agency: 'Reingold',
-		client: 'Curb The Crisis',
-		year: '2024',
-		role: 'Editor, Motion Designer',
-		description:
-			"Editing and motion design across three deliverables for Curb The Crisis's recovery stories — a 2-minute interview-style documentary cut, a 30-second social cut, and a 6-second abstract animation created under full creative freedom.",
-		tools: ['Adobe Premiere Pro', 'Adobe After Effects']
-	},
-	{
-		slug: 'nc-safe',
-		title: 'NC S.A.F.E. Ad Campaign',
-		label: 'NC Public Safety',
-		subtitle: 'S.A.F.E. Campaign',
-		discipline: ['Motion Design'],
-		agency: 'Reingold',
-		client: 'North Carolina Department of Public Safety',
-		year: '2025',
-		role: 'Motion Designer',
-		description:
-			'Motion design for NC S.A.F.E., a statewide safe firearm storage campaign — spanning typographic explainers, photo-based motion graphics, and a simulated text-message narrative format across social media.',
-		tools: ['Adobe After Effects']
-	},
-	{
-		slug: 'ramenya',
-		title: 'RamenYa (PORA) Marketing Materials',
-		label: 'RamenYa',
-		subtitle: 'Rebrand Marketing',
-		discipline: ['Graphic Design', 'Film'],
+		slug: 'kokodak',
+		title: 'Kokodak Brand Identity',
+		label: 'Kokodak',
+		subtitle: 'Brand Identity',
+		discipline: ['Graphic Design', 'Motion Design'],
 		agency: 'TBK Holding',
-		client: 'RamenYa',
+		client: 'Kokodak',
 		year: '2026',
-		role: 'Designer, Director, Producer, Editor',
+		role: 'Designer, Motion Designer',
 		description:
-			"Print and video marketing for RamenYa's rebrand — curated posters and large-format signage, a kitchen BTS film for in-restaurant and web use, and a menu redesign for parent brand PORA.",
-		tools: ['Adobe Premiere Pro', 'Adobe Illustrator', 'Adobe Photoshop']
+			"Full brand identity system for Kokodak, a Korean fried chicken kiosk brand — including logo design and construction, packaging, signage, and apparel, plus a looping motion piece for in-kiosk display. Launched at the brand's first supermarket location, with additional locations planned.",
+		tools: ['Adobe After Effects', 'Adobe Illustrator', 'Adobe Photoshop', 'Adobe Lightroom'],
+		// Hidden until its media is generated — the source drive was offline.
+		hidden: true
+	},
+	{
+		slug: 'red-bull-gives-you-slides',
+		title: 'Red Bull Gives You Slides (Spec Shoot)',
+		label: 'Red Bull',
+		subtitle: 'Spec Shoot',
+		discipline: ['Film', 'Photography'],
+		agency: 'District 5',
+		client: 'Self-initiated spec shoot',
+		year: '2023',
+		role: '2nd AC, BTS Photographer',
+		description:
+			"A spec commercial for Red Bull at Shenandoah Speedway, built around a single practical stunt: keeping a can balanced on a moving car's roof through full-speed drifts. Coordinated with the driver and rigging team to capture the effect safely across multiple takes and camera angles.",
+		tools: ['Adobe Lightroom']
 	},
 	{
 		slug: 'sofar-sounds',
@@ -151,7 +126,7 @@ const projectList: Project[] = [
 	{
 		slug: 'fci-catalog',
 		title: 'FCI Frozen Food Catalog',
-		label: 'Foodie Craft',
+		label: 'Foodie Craft International',
 		subtitle: 'Product Catalog',
 		discipline: ['Graphic Design'],
 		agency: 'TBK Holding',
@@ -165,7 +140,7 @@ const projectList: Project[] = [
 	{
 		slug: 'vim-open-enrollment',
 		title: 'VIM Open Enrollment Ad Campaign',
-		label: 'Virginia Insurance',
+		label: 'Virginia Insurance Marketplace',
 		subtitle: 'Open Enrollment',
 		discipline: ['Motion Design'],
 		agency: 'Reingold',
@@ -174,49 +149,23 @@ const projectList: Project[] = [
 		role: 'Motion Designer',
 		description:
 			"Motion design for Virginia's Insurance Marketplace's open enrollment campaign — character animation, typography, and icon-driven graphics for social, plus footage organization and motion graphic support on broadcast spots.",
-		tools: ['Adobe After Effects']
+		tools: ['Adobe After Effects'],
+		// The kitchen spot.
+		hero: 1
 	},
 	{
-		slug: 'red-bull-gives-you-slides',
-		title: 'Red Bull Gives You Slides (Spec Shoot)',
-		label: 'Red Bull',
-		subtitle: 'Spec Shoot',
-		discipline: ['Film', 'Photography'],
-		agency: 'District 5',
-		client: 'Self-initiated spec shoot',
-		year: '2023',
-		role: '2nd AC, BTS Photographer',
-		description:
-			"A spec commercial for Red Bull at Shenandoah Speedway, built around a single practical stunt: keeping a can balanced on a moving car's roof through full-speed drifts. Coordinated with the driver and rigging team to capture the effect safely across multiple takes and camera angles.",
-		tools: ['Adobe Lightroom']
-	},
-	{
-		slug: 'sushi-and-sake',
-		title: 'Sushi and Sake Pairing Event Graphics',
-		label: 'Sushi Maru',
-		subtitle: 'Sake Pairing Event',
-		discipline: ['Graphic Design'],
-		agency: 'TBK Holding',
-		client: 'Sushi Maru Express',
-		year: '2026',
-		role: 'Designer',
-		description:
-			'A full graphics suite for a sushi and sake pairing event — promotional posters, an Instagram menu grid, a sake lineup with tasting notes, and individual ticket-tier cards, designed for Sushi Maru Express.',
-		tools: ['Adobe Illustrator', 'Adobe Photoshop']
-	},
-	{
-		slug: 'usda-cep',
-		title: 'USDA CEP Awareness Campaign',
-		label: 'USDA',
-		subtitle: 'CEP Campaign',
-		discipline: ['Film'],
+		slug: 'curb-the-crisis',
+		title: 'Curb The Crisis — Recovery Stories',
+		label: 'Curb The Crisis',
+		subtitle: 'Recovery Stories',
+		discipline: ['Film', 'Motion Design'],
 		agency: 'Reingold',
-		client: 'U.S. Department of Agriculture',
+		client: 'Curb The Crisis',
 		year: '2024',
-		role: 'Editor',
+		role: 'Editor, Motion Designer',
 		description:
-			"Editing across short- and long-form videos for the USDA's Community Eligibility Provision (CEP) — supporting a public awareness campaign around free school meal access.",
-		tools: ['Adobe Premiere Pro']
+			"Editing and motion design across three deliverables for Curb The Crisis's recovery stories — a 2-minute interview-style documentary cut, a 30-second social cut, and a 6-second abstract animation created under full creative freedom.",
+		tools: ['Adobe Premiere Pro', 'Adobe After Effects']
 	},
 	{
 		slug: 'maru-matcha',
@@ -233,25 +182,85 @@ const projectList: Project[] = [
 		tools: ['Procreate', 'Adobe Illustrator']
 	},
 	{
-		slug: 'kokodak',
-		title: 'Kokodak Brand Identity',
-		label: 'Kokodak',
-		subtitle: 'Brand Identity',
-		discipline: ['Graphic Design', 'Motion Design'],
-		agency: 'TBK Holding',
-		client: 'Kokodak',
-		year: '2026',
-		role: 'Designer, Motion Designer',
+		slug: 'nc-safe',
+		title: 'NC S.A.F.E. Ad Campaign',
+		label: 'N.C. Department of Public Safety',
+		subtitle: 'S.A.F.E. Campaign',
+		discipline: ['Motion Design'],
+		agency: 'Reingold',
+		client: 'North Carolina Department of Public Safety',
+		year: '2025',
+		role: 'Motion Designer',
 		description:
-			"Full brand identity system for Kokodak, a Korean fried chicken kiosk brand — including logo design and construction, packaging, signage, and apparel, plus a looping motion piece for in-kiosk display. Launched at the brand's first supermarket location, with additional locations planned.",
-		tools: ['Adobe After Effects', 'Adobe Illustrator', 'Adobe Photoshop', 'Adobe Lightroom'],
-		// The source folder is marked incomplete.
-		hidden: true
+			'Motion design for NC S.A.F.E., a statewide safe firearm storage campaign — spanning typographic explainers, photo-based motion graphics, and a simulated text-message narrative format across social media.',
+		tools: ['Adobe After Effects'],
+		// The captioned car video.
+		hero: 4
+	},
+	{
+		slug: 'mjff-parkinsons-act',
+		title: "Passing the National Plan to End Parkinson's Act",
+		label: 'Michael J. Fox Foundation',
+		subtitle: 'Case Study',
+		discipline: ['Film', 'Motion Design'],
+		agency: 'Reingold',
+		client: 'Michael J. Fox Foundation',
+		year: '2024',
+		role: '1st Editor, Motion Designer',
+		description:
+			"A documentary case study on the passage of the National Plan to End Parkinson's Act, combining interview footage with legislative graphics and data overlays to tell the story of the advocacy campaign's impact.",
+		tools: ['Adobe After Effects', 'Adobe Premiere Pro']
+	},
+	{
+		slug: 'sushi-and-sake',
+		title: 'Sushi and Sake Pairing Event Graphics',
+		label: 'Sushi Maru Express',
+		subtitle: 'Sake Pairing Event',
+		discipline: ['Graphic Design'],
+		agency: 'TBK Holding',
+		client: 'Sushi Maru Express',
+		year: '2026',
+		role: 'Designer',
+		description:
+			'A full graphics suite for a sushi and sake pairing event — promotional posters, an Instagram menu grid, a sake lineup with tasting notes, and individual ticket-tier cards, designed for Sushi Maru Express.',
+		tools: ['Adobe Illustrator', 'Adobe Photoshop'],
+		// The sake menu.
+		hero: 1
+	},
+	{
+		slug: 'usda-cep',
+		title: 'USDA CEP Awareness Campaign',
+		label: 'U.S. Department of Agriculture',
+		subtitle: 'CEP Campaign',
+		discipline: ['Film'],
+		agency: 'Reingold',
+		client: 'U.S. Department of Agriculture',
+		year: '2024',
+		role: 'Editor',
+		description:
+			"Editing across short- and long-form videos for the USDA's Community Eligibility Provision (CEP) — supporting a public awareness campaign around free school meal access.",
+		tools: ['Adobe Premiere Pro'],
+		// The horizontal interview film.
+		hero: 2
+	},
+	{
+		slug: 'ramenya',
+		title: 'RamenYa (PORA) Marketing Materials',
+		label: 'RamenYa',
+		subtitle: 'Rebrand Marketing',
+		discipline: ['Graphic Design', 'Film'],
+		agency: 'TBK Holding',
+		client: 'RamenYa',
+		year: '2026',
+		role: 'Designer, Director, Producer, Editor',
+		description:
+			"Print and video marketing for RamenYa's rebrand — curated posters and large-format signage, a kitchen BTS film for in-restaurant and web use, and a menu redesign for parent brand PORA.",
+		tools: ['Adobe Premiere Pro', 'Adobe Illustrator', 'Adobe Photoshop']
 	},
 	{
 		slug: 'ksa',
 		title: 'KSA Event Promos & Recaps',
-		label: 'UMD KSA',
+		label: 'Korean Student Association',
 		subtitle: 'Event Films',
 		discipline: ['Film'],
 		agency: 'University of Maryland',
@@ -285,26 +294,20 @@ export function mediaFor(project: Project): Media[] {
 	return allMedia[project.slug] ?? [];
 }
 
-/** The still that represents a project on cards: an image, or a video's poster. */
-export function coverFor(project: Project) {
+/** The project's hero deliverable. */
+export function heroFor(project: Project): Media | null {
 	const items = mediaFor(project);
-	const item = items[project.cover ?? 0] ?? items[0];
-	if (!item) return null;
-	return {
-		src: item.kind === 'video' ? item.poster : item.src,
-		width: item.width,
-		height: item.height,
-		tone: item.tone,
-		isVideo: item.kind === 'video'
-	};
+	return items[project.hero ?? 0] ?? items[0] ?? null;
 }
+
+/** Everything but the hero, in order — the deliverables below the text. */
+export function restFor(project: Project): Media[] {
+	const hero = heroFor(project);
+	return mediaFor(project).filter((item) => item !== hero);
+}
+
+/** A still for link previews: an image, or a video's poster. */
+export const stillOf = (item: Media) => (item.kind === 'video' ? item.poster : item.src);
 
 /** An image as the lightbox shows it. */
-export type Still = { src: string; width: number; height: number; alt: string; caption?: string };
-
-/** "2:07" */
-export function runtime(seconds: number) {
-	const m = Math.floor(seconds / 60);
-	const s = String(seconds % 60).padStart(2, '0');
-	return `${m}:${s}`;
-}
+export type Still = { src: string; width: number; height: number; alt: string };
