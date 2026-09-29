@@ -9,24 +9,24 @@
 	--font-serif: 'freight-text-pro', 'Newsreader Variable', Georgia, serif;
 	--ease-out-soft: cubic-bezier(0.2, 0.65, 0.25, 1);
 
-	/* Black on white: body text, the grey for subtitles, and the hairlines
+	/* White on near-black: body text, the grey for subtitles, and the hairlines
 	   between sidebar rows. */
-	--color-page: #ffffff;
-	--color-fg: #000000;
-	--color-dim: #707070;
-	--color-rule: rgb(0 0 0 / 0.14);
+	--color-page: #161616;
+	--color-fg: rgb(255 255 255 / 0.88);
+	--color-dim: rgb(170 170 170 / 0.75);
+	--color-rule: rgb(255 255 255 / 0.16);
 
-	/* One colour per name in the bio. The yellow is deepened from pure yellow so
-	   it still reads on white. */
-	--color-name-yellow: #e0a800;
-	--color-name-green: #1e8e3e;
-	--color-name-red: #d93025;
-	--color-name-blue: #1a66d9;
+	/* One colour per name in the bio, bright enough to read on the dark page. */
+	--color-name-yellow: #f5c518;
+	--color-name-green: #3cc26a;
+	--color-name-red: #f0544a;
+	--color-name-blue: #5b9bff;
 }
 
 @layer base {
 	html {
 		scroll-behavior: smooth;
+		color-scheme: dark;
 		background-color: var(--color-page);
 	}
 
