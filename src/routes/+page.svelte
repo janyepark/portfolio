@@ -15,7 +15,12 @@
 	const rows = rowsOf(features.map(({ hero }) => hero));
 
 	// Written out in full so Tailwind sees the class names.
-	const grid = { 1: '', 2: 'grid grid-cols-2 gap-2', 3: 'grid grid-cols-3 gap-2' };
+	const grid = {
+		1: '',
+		2: 'grid grid-cols-2 gap-2',
+		3: 'grid grid-cols-3 gap-2',
+		4: 'grid grid-cols-2 gap-2 sm:grid-cols-4'
+	};
 </script>
 
 <svelte:head>
@@ -31,7 +36,7 @@
 				<ProjectTile
 					project={byHero.get(item)!}
 					hero={item}
-					style={frameStyle(item, row.cols === 1 ? 85 : 1000)}
+					style={frameStyle(item)}
 					priority={index < 2}
 				/>
 			{/each}

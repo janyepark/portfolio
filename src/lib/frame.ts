@@ -21,12 +21,13 @@ export function frameStyle(item: Media, maxVh = 85) {
 }
 
 /** `cols` is shared by every row of a run, so a short last row keeps the same cell size. */
-export type Row = { items: { item: Media; index: number }[]; cols: 1 | 2 | 3 };
+export type Row = { items: { item: Media; index: number }[]; cols: 1 | 2 | 3 | 4 };
 
 /**
  * Deliverables in display order, grouped into rows: a run of identically sized
  * vertical or square pieces shares rows, everything else gets a row of its own.
- * Runs split into rows of up to three, except four, which reads better as 2 + 2.
+ * Tall pieces (reels, posters) run up to four across, so a row of them isn't
+ * several screens tall; square-ish ones up to three, with four as 2 + 2.
  */
 export function rowsOf(items: Media[]): Row[] {
 	const runs: Row['items'][] = [];
@@ -40,7 +41,10 @@ export function rowsOf(items: Media[]): Row[] {
 	});
 
 	return runs.flatMap((run) => {
-		const cols = run.length === 4 ? 2 : (Math.min(run.length, 3) as Row['cols']);
+		const tall = run[0].item.width / run[0].item.height < 0.8;
+		const cols = (
+			!tall && run.length === 4 ? 2 : Math.min(run.length, tall ? 4 : 3)
+		) as Row['cols'];
 		const rows: Row[] = [];
 		for (let i = 0; i < run.length; i += cols) rows.push({ items: run.slice(i, i + cols), cols });
 		return rows;

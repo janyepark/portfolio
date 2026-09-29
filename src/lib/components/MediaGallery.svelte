@@ -15,7 +15,12 @@
 	const rows = $derived(rowsOf(items));
 
 	// Written out in full so Tailwind sees the class names.
-	const grid = { 1: '', 2: 'grid grid-cols-2 gap-2', 3: 'grid grid-cols-3 gap-2' };
+	const grid = {
+		1: '',
+		2: 'grid grid-cols-2 gap-2',
+		3: 'grid grid-cols-3 gap-2',
+		4: 'grid grid-cols-2 gap-2 sm:grid-cols-4'
+	};
 
 	// Only the images go to the lightbox; videos have their own controls.
 	const stills = $derived(
@@ -90,7 +95,7 @@
 			<div class={grid[row.cols]}>
 				{#each row.items as { item, index } (index)}
 					<div use:reveal>
-						{@render deliverable(item, index, frameStyle(item, 1000))}
+						{@render deliverable(item, index, frameStyle(item))}
 					</div>
 				{/each}
 			</div>
