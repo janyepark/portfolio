@@ -76,7 +76,7 @@
 		class="absolute inset-x-0 bottom-0 flex items-baseline gap-2 bg-gradient-to-t from-black/60 to-transparent p-4 pt-10 text-[1.25rem] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
 	>
 		{project.label}
-		<span class="text-white/70 italic">{project.subtitle}</span>
+		<span class="font-sans text-white/70 italic">{project.subtitle}</span>
 	</span>
 	<span class="sr-only">{project.title}</span>
 </a>

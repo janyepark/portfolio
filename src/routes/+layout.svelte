@@ -69,7 +69,7 @@
 						>
 							<span class="shrink-0">{project.label}</span>
 							<span
-								class="truncate text-dim italic transition-colors group-hover:text-fg group-aria-[current=page]:text-fg"
+								class="truncate font-sans text-dim italic transition-colors group-hover:text-fg group-aria-[current=page]:text-fg"
 							>
 								{project.subtitle}
 							</span>

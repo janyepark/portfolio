@@ -16,6 +16,15 @@
 		{ label: 'Role', value: project.role },
 		{ label: 'Discipline', value: project.discipline.join(', ') }
 	]);
+
+	// Only a title's parenthetical is italic — "Red Bull Gives You Slides (Spec Shoot)".
+	// Splitting on a capture group keeps the parentheses as their own pieces.
+	const titleParts = $derived(
+		project.title
+			.split(/(\([^)]*\))/)
+			.filter(Boolean)
+			.map((text) => ({ text, italic: text.startsWith('(') }))
+	);
 </script>
 
 <svelte:head>
@@ -30,7 +39,7 @@
 
 <a
 	href={resolve('/')}
-	class="mb-4 inline-block text-[1.125rem] text-dim italic transition-colors hover:text-fg lg:hidden"
+	class="mb-4 inline-block font-sans text-[1.125rem] text-dim italic transition-colors hover:text-fg lg:hidden"
 >
 	← All projects
 </a>
@@ -44,7 +53,10 @@
 	<header class="grid gap-x-10 gap-y-6 py-10 text-[1.25rem] leading-snug md:grid-cols-2">
 		<div>
 			<p>{project.year}</p>
-			<h1 class="text-[1.75rem] leading-tight italic">{project.title}</h1>
+			<h1 class="text-[1.75rem] leading-tight">
+				{#each titleParts as part, i (i)}{#if part.italic}<em class="font-sans">{part.text}</em
+						>{:else}{part.text}{/if}{/each}
+			</h1>
 			<p class="mt-3 max-w-xl text-pretty">{project.description}</p>
 		</div>
 
@@ -57,7 +69,7 @@
 					</div>
 				{/each}
 			</dl>
-			<p class="mt-4 italic">{project.tools.join(', ')}</p>
+			<p class="mt-4 font-sans italic">{project.tools.join(', ')}</p>
 		</div>
 	</header>
 
@@ -71,9 +83,9 @@
 		href={resolve('/[slug]', { slug: next.slug })}
 		class="group flex items-baseline gap-2 text-[1.25rem]"
 	>
-		<span class="text-dim italic">Next</span>
+		<span class="font-sans text-dim italic">Next</span>
 		<span class="transition-colors group-hover:text-dim">{next.label}</span>
-		<span class="text-dim italic">{next.subtitle}</span>
+		<span class="font-sans text-dim italic">{next.subtitle}</span>
 		<span class="ml-auto transition-transform group-hover:translate-x-1">→</span>
 	</a>
 </nav>
