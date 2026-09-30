@@ -53,9 +53,10 @@
 	<!-- Three columns spanning the media's full width, all starting on the
 	     title's line: title and tools, description, credits. The year sits
 	     above, over the first column. Fixed proportions, so the columns fall
-	     in the same place on every project whatever their text. -->
+	     in the same place on every project whatever their text; the
+	     description gets the widest share so it doesn't stack up. -->
 	<header
-		class="grid gap-x-10 gap-y-4 py-10 text-[1.25rem] leading-snug md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.85fr)] md:gap-y-1"
+		class="grid gap-x-7 gap-y-4 py-10 text-[1.25rem] leading-snug md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)_minmax(0,0.8fr)] md:gap-y-1"
 	>
 		<p class="md:col-span-3">{project.year}</p>
 
