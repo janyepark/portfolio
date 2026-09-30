@@ -40,7 +40,7 @@
 
 <a
 	href={resolve('/')}
-	class="mb-4 inline-block font-sans text-[0.95rem] text-dim italic transition-colors hover:text-fg lg:hidden"
+	class="mb-4 inline-block font-sans text-[0.85rem] text-dim italic transition-colors hover:text-fg lg:hidden"
 >
 	← All projects
 </a>
@@ -61,11 +61,11 @@
 
 		<div>
 			<h1 class="text-[1.75rem] leading-tight font-semibold text-balance">
-				{#each titleParts as part, i (i)}{#if part.italic}<em class="font-sans text-[0.85em]"
+				{#each titleParts as part, i (i)}{#if part.italic}<em class="font-sans text-[0.75em]"
 							>{part.text}</em
 						>{:else}{part.text}{/if}{/each}
 			</h1>
-			<p class="mt-2 font-sans text-[0.85em] italic">{project.tools.join(', ')}</p>
+			<p class="mt-2 font-sans text-[0.75em] italic">{project.tools.join(', ')}</p>
 		</div>
 
 		<p class="text-pretty">{project.description}</p>
@@ -90,9 +90,9 @@
 		href={resolve('/[slug]', { slug: next.slug })}
 		class="group flex items-baseline gap-2 text-[1.25rem]"
 	>
-		<span class="font-sans text-[0.85em] text-dim italic">Next</span>
+		<span class="font-sans text-[0.75em] text-dim italic">Next</span>
 		<span class="transition-colors group-hover:text-dim">{next.label}</span>
-		<span class="font-sans text-[0.85em] text-dim italic">{next.subtitle}</span>
+		<span class="font-sans text-[0.75em] text-dim italic">{next.subtitle}</span>
 		<span class="ml-auto transition-transform group-hover:translate-x-1">→</span>
 	</a>
 </nav>

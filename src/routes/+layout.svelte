@@ -71,7 +71,7 @@
 						>
 							<span>{project.label}</span>
 							<span
-								class="font-sans text-[0.85em] text-dim italic transition-colors group-hover:text-fg group-aria-[current=page]:text-fg"
+								class="font-sans text-[0.75em] text-dim italic transition-colors group-hover:text-fg group-aria-[current=page]:text-fg"
 							>
 								{project.subtitle}
 							</span>
