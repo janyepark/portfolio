@@ -7,27 +7,25 @@ export const isWide = (item: Media) => item.width / item.height >= 1.2;
 export const sameSize = (a: Media, b: Media) => a.width === b.width && a.height === b.height;
 
 /**
- * Inline style that shows a deliverable whole, never cropped: its own aspect
- * ratio, as wide as the column allows but no taller than `maxVh` of the
- * screen, so a lone vertical cut doesn't run two screens tall.
+ * Inline style that shows a deliverable whole, never cropped, and edge to edge:
+ * the full width of its column at its own aspect ratio.
  */
-export function frameStyle(item: Media, maxVh = 85) {
-	const ratio = item.width / item.height;
+export function frameStyle(item: Media) {
 	return [
 		`aspect-ratio: ${item.width} / ${item.height}`,
-		`width: min(100%, ${(maxVh * ratio).toFixed(2)}dvh)`,
+		'width: 100%',
 		`background-color: ${item.tone}`
 	].join('; ');
 }
 
 /** `cols` is shared by every row of a run, so a short last row keeps the same cell size. */
-export type Row = { items: { item: Media; index: number }[]; cols: 1 | 2 | 3 | 4 };
+export type Row = { items: { item: Media; index: number }[]; cols: 1 | 2 | 3 };
 
 /**
  * Deliverables in display order, grouped into rows: a run of identically sized
  * vertical or square pieces shares rows, everything else gets a row of its own.
- * Tall pieces (reels, posters) run up to four across, so a row of them isn't
- * several screens tall; square-ish ones up to three, with four as 2 + 2.
+ * Two or four go two across (four as a 2 × 2), three go three across, and
+ * longer runs fill rows of three.
  */
 export function rowsOf(items: Media[]): Row[] {
 	const runs: Row['items'][] = [];
@@ -41,9 +39,8 @@ export function rowsOf(items: Media[]): Row[] {
 	});
 
 	return runs.flatMap((run) => {
-		const tall = run[0].item.width / run[0].item.height < 0.8;
 		const cols = (
-			!tall && run.length === 4 ? 2 : Math.min(run.length, tall ? 4 : 3)
+			run.length === 1 ? 1 : run.length === 2 || run.length === 4 ? 2 : 3
 		) as Row['cols'];
 		const rows: Row[] = [];
 		for (let i = 0; i < run.length; i += cols) rows.push({ items: run.slice(i, i + cols), cols });

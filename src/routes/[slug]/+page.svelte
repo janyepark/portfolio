@@ -17,13 +17,14 @@
 		{ label: 'Discipline', value: project.discipline.join(', ') }
 	]);
 
-	// Only a title's parenthetical is italic — "Red Bull Gives You Slides (Spec Shoot)".
-	// Splitting on a capture group keeps the parentheses as their own pieces.
+	// Only the words inside a title's parenthetical are italic; the brackets stay
+	// upright — "Red Bull Gives You Slides (*Spec Shoot*)".
 	const titleParts = $derived(
 		project.title
-			.split(/(\([^)]*\))/)
-			.filter(Boolean)
-			.map((text) => ({ text, italic: text.startsWith('(') }))
+			.split(/\(([^)]*)\)/)
+			.flatMap((text, i) =>
+				i % 2 ? [{ text: '(' }, { text, italic: true }, { text: ')' }] : text ? [{ text }] : []
+			)
 	);
 </script>
 
@@ -49,28 +50,33 @@
 		<MediaGallery items={[hero]} title={project.title} priority />
 	{/if}
 
-	<!-- Two columns: the story on the left, the credits and tools on the right. -->
-	<header class="grid gap-x-10 gap-y-6 py-10 text-[1.25rem] leading-snug md:grid-cols-2">
+	<!-- Three columns spanning the media's full width, all starting on the
+	     title's line: title and tools, description, credits. The year sits
+	     above, over the first column. The last column is only as wide as its
+	     text, so the credits end at the media's right edge. -->
+	<header
+		class="grid gap-x-10 gap-y-4 py-10 text-[1.25rem] leading-snug md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_fit-content(26rem)] md:gap-y-1"
+	>
+		<p class="md:col-span-3">{project.year}</p>
+
 		<div>
-			<p>{project.year}</p>
-			<h1 class="text-[1.75rem] leading-tight">
+			<h1 class="text-[1.75rem] leading-tight font-semibold text-balance">
 				{#each titleParts as part, i (i)}{#if part.italic}<em class="font-sans">{part.text}</em
 						>{:else}{part.text}{/if}{/each}
 			</h1>
-			<p class="mt-3 max-w-xl text-pretty">{project.description}</p>
+			<p class="mt-2 font-sans italic">{project.tools.join(', ')}</p>
 		</div>
 
-		<div>
-			<dl>
-				{#each credits as credit (credit.label)}
-					<div>
-						<dt class="inline">{credit.label} —</dt>
-						<dd class="inline">{credit.value}</dd>
-					</div>
-				{/each}
-			</dl>
-			<p class="mt-4 font-sans italic">{project.tools.join(', ')}</p>
-		</div>
+		<p class="text-pretty">{project.description}</p>
+
+		<dl>
+			{#each credits as credit (credit.label)}
+				<div>
+					<dt class="inline font-semibold">{credit.label}</dt>
+					<dd class="inline">— {credit.value}</dd>
+				</div>
+			{/each}
+		</dl>
 	</header>
 
 	{#if rest.length}

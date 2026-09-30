@@ -42,7 +42,12 @@ type Source =
 	/** `posterAt` picks the poster frame, in seconds, when the default lands on a title card or black. */
 	| { file: string; posterAt?: number }
 	/** Every page of a PDF becomes its own still. */
-	| { pdf: string };
+	| { pdf: string }
+	/**
+	 * Left off the site but still counted, so every later file keeps its number
+	 * (names come from position, and existing outputs are reused by name).
+	 */
+	| { omit: string };
 
 /**
  * What to take from each project folder, in display order. The `-compressed`
@@ -65,25 +70,25 @@ const projects: Record<string, { dir: string; items: Source[]; draft?: boolean }
 	},
 	'mjff-parkinsons-act': {
 		dir: 'MJFF Pro Bono Video',
-		items: [{ file: 'MJFF Case Study.mp4', posterAt: 112 }, { file: 'MJF-Shoot_Ted-2_110624.jpg' }]
+		items: [{ file: 'MJFF Case Study.mp4', posterAt: 3 }, { file: 'MJF-Shoot_Ted-2_110624.jpg' }]
 	},
 	'nc-safe': {
 		dir: 'NC SAFE',
-		items: numbered(5, { 5: 3.8 })
+		items: numbered(5, { 5: 14 })
 	},
 	'vim-open-enrollment': {
 		dir: 'VIM Ad Campaign',
-		items: numbered(5, { 2: 21.1 })
+		items: numbered(5, { 1: 21, 2: 28 })
 	},
 	'usda-cep': {
 		dir: 'USDA',
-		items: numbered(3, { 3: 187.1 })
+		items: numbered(3, { 1: 10, 2: 34, 3: 13 })
 	},
 	'sofar-sounds': {
 		dir: 'Sofar Sounds',
 		items: [
-			{ file: 'Parisalexa Performance.mp4', posterAt: 177.6 },
-			{ file: 'TeZA Talks Interview.mp4' },
+			{ file: 'Parisalexa Performance.mp4', posterAt: 1 },
+			{ file: 'TeZA Talks Interview.mp4', posterAt: 10 },
 			{ file: 'toronto_performance_jordan_v02.mov' },
 			{ file: 'nashville_short_10s_v01.mov' }
 		]
@@ -91,14 +96,14 @@ const projects: Record<string, { dir: string; items: Source[]; draft?: boolean }
 	'red-bull-gives-you-slides': {
 		dir: 'Red Bull Spec Shoot',
 		items: [
-			{ file: 'Red Bull Gives You Slides.mp4', posterAt: 18 },
+			{ file: 'Red Bull Gives You Slides.mp4', posterAt: 46 },
 			...['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'].map((n) => ({ file: `${n}.png` }))
 		]
 	},
 	ramenya: {
 		dir: 'Ramenya',
 		items: [
-			{ file: 'ramenya promo.mp4', posterAt: 51.6 },
+			{ file: 'ramenya promo.mp4', posterAt: 44 },
 			...['1', '2', '3', '4', '5'].map((n) => ({ pdf: `${n}.pdf` }))
 		]
 	},
@@ -108,7 +113,10 @@ const projects: Record<string, { dir: string; items: Source[]; draft?: boolean }
 	},
 	'sushi-and-sake': {
 		dir: 'Sushi & Sake',
-		items: ['1', '2', '3', '4', '5', '6', '7', '8'].map((n) => ({ pdf: `${n}.pdf` }))
+		// 4.pdf is the square event poster, left off the site.
+		items: ['1', '2', '3', '4', '5', '6', '7', '8'].map((n) =>
+			n === '4' ? { omit: `${n}.pdf` } : { pdf: `${n}.pdf` }
+		)
 	},
 	'maru-matcha': {
 		dir: 'Maru Matcha',
@@ -120,14 +128,11 @@ const projects: Record<string, { dir: string; items: Source[]; draft?: boolean }
 	},
 	ksa: {
 		dir: 'KSA',
-		items: numbered(5, { 1: 179.1 })
+		items: numbered(5, { 1: 161, 2: 16, 3: 3, 4: 87, 5: 0 })
 	},
 	'freelance-film': {
 		dir: 'Freelance Film',
-		items: [
-			{ file: '1.mp4', posterAt: 20 },
-			...['2', '3', '4', '5', '6', '7'].map((n) => ({ file: `${n}.mp4` }))
-		]
+		items: numbered(7, { 1: 139, 2: 26, 3: 29, 4: 21 })
 	}
 };
 
@@ -299,6 +304,7 @@ for (const [slug, { dir, items, draft }] of Object.entries(projects)) {
 
 	for (const [i, item] of items.entries()) {
 		const name = String(i + 1).padStart(2, '0');
+		if ('omit' in item) continue;
 		if ('pdf' in item) {
 			media.push(...(await pdfPages(join(SOURCE, dir, item.pdf), slug, name)));
 		} else if (VIDEO.test(item.file)) {

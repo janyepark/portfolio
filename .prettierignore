@@ -7,3 +7,6 @@ bun.lockb
 
 # Miscellaneous
 /static/
+
+# Written by scripts/build-media.ts
+/src/lib/generated

@@ -25,7 +25,7 @@
 </svelte:head>
 
 <div
-	class="min-h-dvh bg-page font-serif text-fg antialiased lg:grid lg:grid-cols-[minmax(22rem,30vw)_1fr]"
+	class="min-h-dvh bg-page font-serif text-fg antialiased lg:grid lg:grid-cols-[minmax(24rem,33vw)_1fr]"
 >
 	<!-- Sticky and independently scrollable on desktop, like a table of contents.
 	     On phones it's a plain header, and the project list only shows on the
@@ -39,7 +39,8 @@
 				{#if i === 0}
 					<a
 						href={resolve('/')}
-						class="{part.color && nameColor[part.color]} transition-opacity hover:opacity-70"
+						class="{part.color &&
+							nameColor[part.color]} font-semibold transition-opacity hover:opacity-70"
 						>{part.text}</a
 					>
 				{:else if part.href}
@@ -47,11 +48,12 @@
 						href={part.href}
 						target="_blank"
 						rel="external noopener"
-						class="{part.color && nameColor[part.color]} transition-opacity hover:opacity-70"
+						class="{part.color &&
+							nameColor[part.color]} font-semibold transition-opacity hover:opacity-70"
 						>{part.text}</a
 					>
 				{:else if part.color}
-					<span class={nameColor[part.color]}>{part.text}</span>
+					<span class="{nameColor[part.color]} font-semibold">{part.text}</span>
 				{:else}
 					{part.text}
 				{/if}
@@ -65,11 +67,11 @@
 						<a
 							href={resolve('/[slug]', { slug: project.slug })}
 							aria-current={isCurrent(project.slug) ? 'page' : undefined}
-							class="group flex items-baseline gap-2 py-2.5 text-[1.25rem] leading-tight"
+							class="group flex flex-wrap items-baseline gap-x-2.5 py-4 text-[1.5rem] leading-tight"
 						>
-							<span class="shrink-0">{project.label}</span>
+							<span>{project.label}</span>
 							<span
-								class="truncate font-sans text-dim italic transition-colors group-hover:text-fg group-aria-[current=page]:text-fg"
+								class="font-sans text-dim italic transition-colors group-hover:text-fg group-aria-[current=page]:text-fg"
 							>
 								{project.subtitle}
 							</span>
@@ -79,7 +81,7 @@
 			</ul>
 		</nav>
 
-		<ul class="mt-5 space-y-0.5 text-[1.25rem] max-lg:hidden">
+		<ul class="mt-6 space-y-1 text-[1.5rem] max-lg:hidden">
 			{#each links as link (link.href)}
 				<li>
 					<a href={link.href} rel="external" class="transition-colors hover:text-dim">

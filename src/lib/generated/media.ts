@@ -51,7 +51,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/mjff-parkinsons-act/01.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#6f615e',
+			tone: '#d0cfcf',
 			duration: 132
 		},
 		{
@@ -105,7 +105,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/nc-safe/05.webp',
 			width: 1080,
 			height: 1920,
-			tone: '#383d30',
+			tone: '#2e588a',
 			duration: 15
 		}
 	],
@@ -116,7 +116,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/vim-open-enrollment/01.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#7c8c91',
+			tone: '#717347',
 			duration: 30
 		},
 		{
@@ -125,7 +125,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/vim-open-enrollment/02.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#948672',
+			tone: '#847766',
 			duration: 30
 		},
 		{
@@ -163,7 +163,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/usda-cep/01.webp',
 			width: 1080,
 			height: 1920,
-			tone: '#5b5558',
+			tone: '#5e5656',
 			duration: 48
 		},
 		{
@@ -172,7 +172,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/usda-cep/02.webp',
 			width: 1080,
 			height: 1920,
-			tone: '#5b5456',
+			tone: '#ab9d70',
 			duration: 41
 		},
 		{
@@ -181,7 +181,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/usda-cep/03.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#4c474e',
+			tone: '#0b5b4b',
 			duration: 220
 		}
 	],
@@ -192,7 +192,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/sofar-sounds/01.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#50311f',
+			tone: '#7a533f',
 			duration: 254
 		},
 		{
@@ -201,7 +201,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/sofar-sounds/02.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#4a4845',
+			tone: '#4d4c49',
 			duration: 99
 		},
 		{
@@ -230,7 +230,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/red-bull-gives-you-slides/01.webp',
 			width: 1920,
 			height: 960,
-			tone: '#4e4d4b',
+			tone: '#ffe7e4',
 			duration: 48
 		},
 		{
@@ -311,7 +311,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/ramenya/01.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#69635a',
+			tone: '#231e16',
 			duration: 61
 		},
 		{
@@ -418,13 +418,6 @@ export const media: Record<string, Media[]> = {
 		},
 		{
 			kind: 'image',
-			src: '/work/sushi-and-sake/04.webp',
-			width: 2400,
-			height: 2400,
-			tone: '#93a489'
-		},
-		{
-			kind: 'image',
 			src: '/work/sushi-and-sake/05.webp',
 			width: 2400,
 			height: 2400,
@@ -503,7 +496,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/ksa/01.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#5f5f4f',
+			tone: '#3e3f3a',
 			duration: 211
 		},
 		{
@@ -512,7 +505,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/ksa/02.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#272727',
+			tone: '#393535',
 			duration: 82
 		},
 		{
@@ -521,7 +514,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/ksa/03.webp',
 			width: 1920,
 			height: 1246,
-			tone: '#1a110b',
+			tone: '#26190c',
 			duration: 95
 		},
 		{
@@ -530,7 +523,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/ksa/04.webp',
 			width: 720,
 			height: 720,
-			tone: '#3a3735',
+			tone: '#544e46',
 			duration: 126
 		},
 		{
@@ -539,7 +532,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/ksa/05.webp',
 			width: 1080,
 			height: 718,
-			tone: '#376462',
+			tone: '#473729',
 			duration: 209
 		}
 	],
@@ -550,7 +543,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/freelance-film/01.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#111010',
+			tone: '#302f2a',
 			duration: 144
 		},
 		{
@@ -559,7 +552,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/freelance-film/02.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#9c9891',
+			tone: '#5a5f55',
 			duration: 212
 		},
 		{
@@ -568,7 +561,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/freelance-film/03.webp',
 			width: 640,
 			height: 360,
-			tone: '#120f09',
+			tone: '#494e2e',
 			duration: 162
 		},
 		{
@@ -577,7 +570,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/freelance-film/04.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#897d79',
+			tone: '#7c776f',
 			duration: 390
 		},
 		{

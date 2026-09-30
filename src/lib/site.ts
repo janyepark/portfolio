@@ -46,8 +46,8 @@ export const videoUrl = (item: Extract<Media, { kind: 'video' }>) => mediaOrigin
 
 // Outbound links only — these render with rel="external".
 export const links = [
-	{ href: `mailto:${site.email}`, label: 'Email' },
-	{ href: 'https://www.linkedin.com/in/janepark215', label: 'LinkedIn' }
+	{ href: 'https://www.linkedin.com/in/janepark215', label: 'LinkedIn' },
+	{ href: `mailto:${site.email}`, label: 'Email' }
 ];
 
 export const disciplines = ['Film', 'Motion Design', 'Graphic Design', 'Photography'] as const;
@@ -111,12 +111,12 @@ const projectList: Project[] = [
 	},
 	{
 		slug: 'sofar-sounds',
-		title: 'Sofar Sounds Artist Series',
+		title: 'Sofar Sounds — Artist Series',
 		label: 'Sofar Sounds',
 		subtitle: 'Artist Series',
 		discipline: ['Film'],
 		agency: 'District 5',
-		client: 'Sofar Sounds (Costa Coffee, Destination Toronto, Visit Seattle, SoFun Tour)',
+		client: 'Sofar Sounds',
 		year: '2023',
 		role: 'Editor',
 		description:
