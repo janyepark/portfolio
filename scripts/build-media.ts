@@ -132,7 +132,7 @@ const projects: Record<string, { dir: string; items: Source[]; draft?: boolean }
 	},
 	'freelance-film': {
 		dir: 'Freelance Film',
-		items: numbered(7, { 1: 139, 2: 26, 3: 29, 4: 21 })
+		items: numbered(7, { 1: 139, 2: 27, 3: 29, 4: 21 })
 	}
 };
 

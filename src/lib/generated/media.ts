@@ -552,7 +552,7 @@ export const media: Record<string, Media[]> = {
 			poster: '/work/freelance-film/02.webp',
 			width: 1920,
 			height: 1080,
-			tone: '#5a5f55',
+			tone: '#66685d',
 			duration: 212
 		},
 		{
