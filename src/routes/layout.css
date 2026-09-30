@@ -42,6 +42,18 @@
 	}
 }
 
+/* --- Hidden scrollbar ---------------------------------------------------
+   The sidebar still scrolls on short screens (wheel, trackpad, keyboard);
+   it just doesn't draw a bar. */
+
+.no-scrollbar {
+	scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+
 /* --- Scroll reveal -------------------------------------------------------
    The `reveal` action stamps data-reveal on mount, so prerendered markup is
    visible by default and only animates once JS is running. */

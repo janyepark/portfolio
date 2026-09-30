@@ -31,7 +31,7 @@
 	     On phones it's a plain header, and the project list only shows on the
 	     homepage so a project page opens on its work. -->
 	<aside
-		class="px-5 pt-5 lg:sticky lg:top-0 lg:h-dvh lg:overflow-y-auto lg:pb-8"
+		class="no-scrollbar px-5 pt-5 lg:sticky lg:top-0 lg:h-dvh lg:overflow-y-auto lg:pb-8"
 		aria-label="About and projects"
 	>
 		<p class="text-[1.5rem] leading-[1.25] text-pretty lg:text-[1.75rem]">
