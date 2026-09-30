@@ -97,7 +97,7 @@ const projectList: Project[] = [
 	},
 	{
 		slug: 'red-bull-gives-you-slides',
-		title: 'Red Bull Gives You Slides (Spec Shoot)',
+		title: 'Red Bull Gives You Slides',
 		label: 'Red Bull',
 		subtitle: 'Spec Shoot',
 		discipline: ['Film', 'Photography'],
