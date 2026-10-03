@@ -18,7 +18,6 @@ export const site = {
 /**
  * The sidebar's opening sentence. A `color` part is one of the names in it,
  * each in its own colour (tokens in layout.css); an `href` makes it a link.
- * TODO: add District 5's site once known.
  */
 export const intro: { text: string; color?: 'yellow' | 'green' | 'red' | 'blue'; href?: string }[] =
 	[
@@ -30,7 +29,7 @@ export const intro: { text: string; color?: 'yellow' | 'green' | 'red' | 'blue';
 		{ text: '. Previously at ' },
 		{ text: 'Reingold', color: 'red', href: 'https://www.reingold.com/' },
 		{ text: ' & ' },
-		{ text: 'District 5', color: 'blue' },
+		{ text: 'District 5', color: 'blue', href: 'https://www.indistrict5.com/' },
 		{ text: '.' }
 	];
 
@@ -73,6 +72,11 @@ export type Project = {
 	 * text, and as the project's feature on the homepage. Defaults to the first.
 	 */
 	hero?: number;
+	/**
+	 * The deliverables below the text run together with no gaps, as one
+	 * continuous scroll — for the slides of a single deck.
+	 */
+	seamless?: boolean;
 	/** Kept out of every listing and not prerendered. Flip off to publish. */
 	hidden?: boolean;
 };
@@ -92,8 +96,8 @@ const projectList: Project[] = [
 		description:
 			"Full brand identity system for Kokodak, a Korean fried chicken kiosk brand — including logo design and construction, packaging, signage, and apparel, plus a looping motion piece for in-kiosk display. Launched at the brand's first supermarket location, with additional locations planned.",
 		tools: ['Adobe After Effects', 'Adobe Illustrator', 'Adobe Photoshop', 'Adobe Lightroom'],
-		// Hidden until its media is generated — the source drive was offline.
-		hidden: true
+		// The branding deck's slides.
+		seamless: true
 	},
 	{
 		slug: 'red-bull-gives-you-slides',
@@ -120,7 +124,7 @@ const projectList: Project[] = [
 		year: '2023',
 		role: 'Editor',
 		description:
-			"Editor across Sofar Sounds' artist series — performance videos, interviews, and short-form social cuts — spanning 15+ artists and collaborations including SoFun Tour, Costa Coffee, and Destination Seattle/Toronto.",
+			"Editor across Sofar Sounds' artist series — performance videos, interviews, and short-form social cuts — spanning 15+ artists and collaborations including Visa, Deep Eddy Vodka, Costa Coffee, Visit Seattle, and Destination Toronto.",
 		tools: ['Adobe Premiere Pro']
 	},
 	{
@@ -223,9 +227,7 @@ const projectList: Project[] = [
 		role: 'Designer',
 		description:
 			'A full graphics suite for a sushi and sake pairing event — promotional posters, an Instagram menu grid, a sake lineup with tasting notes, and individual ticket-tier cards, designed for Sushi Maru Express.',
-		tools: ['Adobe Illustrator', 'Adobe Photoshop'],
-		// The sake menu.
-		hero: 1
+		tools: ['Adobe Illustrator', 'Adobe Photoshop']
 	},
 	{
 		slug: 'usda-cep',
@@ -268,7 +270,7 @@ const projectList: Project[] = [
 		year: '2021–2023',
 		role: 'Director, Producer, Videographer, Editor',
 		description:
-			"Promo and recap videos for KEXPO and NIK, UMD Korean Student Association's flagship semi-annual events, plus a board introduction video — all directed, produced, and edited during a term as KSA's board Historian.",
+			"Promo and recap videos for KEXPO and NIK, UMD Korean Student Association's flagship semi-annual events, plus board introduction videos — all directed, produced, and edited over three terms as KSA's Executive Board Historian.",
 		tools: ['Adobe Premiere Pro']
 	},
 	{

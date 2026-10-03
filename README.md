@@ -17,20 +17,22 @@ nothing has to be uploaded to preview.
 
 - **Project text** — title, client, role, description, tools — lives in `src/lib/site.ts`, in
   display order. The first six are "Selected work" on the homepage. Set `hidden: true` to keep a
-  project off the site. Kokodak is hidden for now, and also marked `draft` in the media script so
-  none of its files land in `static/` — everything there is public, linked or not.
+  project off the site, and mark it `draft` in the media script so none of its files land in
+  `static/` — everything there is public, linked or not.
 - **Media** comes from the raw project folders via `scripts/build-media.ts`:
 
   ```sh
-  bun run build:media                     # defaults to /Volumes/who dat/PORTFOLIO
-  bun run build:media /path/to/PORTFOLIO
+  bun run build:media                     # searches /Volumes/MP Creative/JANE PORT, then /Volumes/who dat/PORTFOLIO
+  bun run build:media /path/a /path/b     # or these folders, in this order
   ```
 
   It re-encodes video to ≤1080p H.264 in `../portfolio-media/work/<slug>/`, converts stills, PDF
   pages and video posters to WebP in `static/work/<slug>/`, and writes
   `src/lib/generated/media.ts`. Which files it takes from each folder, and in what order, is the
-  `projects` table at the top of the script. Outputs that already exist are skipped. Needs
-  `brew install ffmpeg poppler webp`.
+  `projects` table at the top of the script. Outputs that already exist are skipped (so a source
+  can leave the drive once it's encoded); delete one to redo it. Outputs are numbered by
+  position, so a file added between existing ones gets a `name` rather than renumbering them.
+  Needs `brew install ffmpeg poppler webp`.
 
 - Name, email, links and the placeholder bio: `src/lib/site.ts`, `src/routes/+page.svelte`,
   `src/routes/about/+page.svelte` (search for `TODO`).

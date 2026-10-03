@@ -24,8 +24,8 @@ export type Row = { items: { item: Media; index: number }[]; cols: 1 | 2 | 3 };
 /**
  * Deliverables in display order, grouped into rows: a run of identically sized
  * vertical or square pieces shares rows, everything else gets a row of its own.
- * Two or four go two across (four as a 2 × 2), three go three across, and
- * longer runs fill rows of three.
+ * An even number go two across — in pairs, so four make a 2 × 2 — and an odd
+ * number fill rows of three.
  */
 export function rowsOf(items: Media[]): Row[] {
 	const runs: Row['items'][] = [];
@@ -39,9 +39,7 @@ export function rowsOf(items: Media[]): Row[] {
 	});
 
 	return runs.flatMap((run) => {
-		const cols = (
-			run.length === 1 ? 1 : run.length === 2 || run.length === 4 ? 2 : 3
-		) as Row['cols'];
+		const cols = (run.length === 1 ? 1 : run.length % 2 === 0 ? 2 : 3) as Row['cols'];
 		const rows: Row[] = [];
 		for (let i = 0; i < run.length; i += cols) rows.push({ items: run.slice(i, i + cols), cols });
 		return rows;

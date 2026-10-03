@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { site, heroFor, restFor, stillOf } from '$lib/site';
 	import MediaGallery from '$lib/components/MediaGallery.svelte';
+	import { shrinkwrap } from '$lib/actions/shrinkwrap';
 
 	let { data } = $props();
 
@@ -52,16 +53,16 @@
 
 	<!-- Three columns spanning the media's full width, all starting on the
 	     title's line: title and tools, description, credits. The year sits
-	     above, over the first column. Fixed proportions, so the columns fall
-	     in the same place on every project whatever their text; the
-	     description gets the widest share so it doesn't stack up. -->
+	     above, over the first column. The outer two are as wide as their text
+	     (up to a cap) and the description takes the rest, so the visible
+	     space between the three is the same gap on both sides. -->
 	<header
-		class="grid gap-x-7 gap-y-4 py-10 text-[1.25rem] leading-snug md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)_minmax(0,0.8fr)] md:gap-y-1"
+		class="grid gap-x-7 gap-y-4 py-10 text-[1.25rem] leading-snug md:grid-cols-[fit-content(16rem)_minmax(0,1fr)_fit-content(16rem)] md:gap-y-1"
 	>
 		<p class="md:col-span-3">{project.year}</p>
 
-		<div>
-			<h1 class="text-[1.75rem] leading-tight font-semibold text-balance">
+		<div use:shrinkwrap class="md:w-(--shrinkwrap)">
+			<h1 class="text-[1.75rem] leading-tight font-semibold">
 				{#each titleParts as part, i (i)}{#if part.italic}<em class="font-sans text-[0.75em]"
 							>{part.text}</em
 						>{:else}{part.text}{/if}{/each}
@@ -82,7 +83,7 @@
 	</header>
 
 	{#if rest.length}
-		<MediaGallery items={rest} title={project.title} />
+		<MediaGallery items={rest} title={project.title} seamless={project.seamless} />
 	{/if}
 </article>
 
