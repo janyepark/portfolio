@@ -388,42 +388,42 @@ export const media: Record<string, Media[]> = {
 			"src": "/work/fci-catalog/01.webp",
 			"width": 2400,
 			"height": 1350,
-			"tone": "#5a5a5a"
+			"tone": "#f8f7f7"
 		},
 		{
 			"kind": "image",
 			"src": "/work/fci-catalog/02.webp",
-			"width": 2400,
-			"height": 1350,
-			"tone": "#80807f"
+			"width": 2358,
+			"height": 1326,
+			"tone": "#ebebe9"
 		},
 		{
 			"kind": "image",
 			"src": "/work/fci-catalog/03.webp",
 			"width": 2400,
 			"height": 1350,
-			"tone": "#797875"
+			"tone": "#d7d4d0"
 		},
 		{
 			"kind": "image",
 			"src": "/work/fci-catalog/04.webp",
-			"width": 2400,
-			"height": 1350,
-			"tone": "#777571"
+			"width": 2392,
+			"height": 1346,
+			"tone": "#dbd9d3"
 		},
 		{
 			"kind": "image",
 			"src": "/work/fci-catalog/05.webp",
 			"width": 2400,
 			"height": 1350,
-			"tone": "#797774"
+			"tone": "#dedbd6"
 		},
 		{
 			"kind": "image",
 			"src": "/work/fci-catalog/06.webp",
-			"width": 2400,
-			"height": 1350,
-			"tone": "#7b7b79"
+			"width": 2397,
+			"height": 1348,
+			"tone": "#e2e1de"
 		}
 	],
 	"sushi-and-sake": [
