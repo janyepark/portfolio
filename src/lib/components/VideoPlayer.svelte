@@ -179,7 +179,7 @@
 			type="button"
 			onclick={toggle}
 			aria-label="Play {label}"
-			class="absolute top-1/2 left-1/2 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-white backdrop-blur-md transition hover:scale-105 hover:bg-white/25"
+			class="absolute top-1/2 left-1/2 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-black/35 text-white backdrop-blur-md transition hover:scale-105 hover:bg-black/50"
 		>
 			<svg viewBox="0 0 24 24" class="ml-1 size-7 fill-current" aria-hidden="true">
 				<path d="M7 4.5v15l13-7.5z" />

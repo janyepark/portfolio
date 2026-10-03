@@ -46,22 +46,25 @@
 	← All projects
 </a>
 
-<article>
+<article class="@container">
 	{#if hero}
 		<MediaGallery items={[hero]} title={project.title} priority />
 	{/if}
 
-	<!-- Three columns spanning the media's full width, all starting on the
-	     title's line: title and tools, description, credits. The year sits
-	     above, over the first column. The outer two are as wide as their text
-	     (up to a cap) and the description takes the rest, so the visible
-	     space between the three is the same gap on both sides. -->
+	<!-- Laid out by the room beside the sidebar, not the screen: an iPad shows
+	     the sidebar but leaves too little width for three columns.
+	     Wide: three columns all starting on the title's line — title and
+	     tools, description, credits — with the year above. The outer two are
+	     as wide as their text (up to a cap) and the description takes the
+	     rest, so the visible space between the three is the same gap.
+	     Medium: title beside description, credits under the description at
+	     that same gap. Narrow: stacked. -->
 	<header
-		class="grid gap-x-7 gap-y-4 py-10 text-[1.25rem] leading-snug md:grid-cols-[fit-content(16rem)_minmax(0,1fr)_fit-content(16rem)] md:gap-y-1"
+		class="grid gap-x-7 gap-y-4 py-10 text-[1.25rem] leading-snug @2xl:grid-cols-[fit-content(16rem)_minmax(0,1fr)] @2xl:gap-y-1 @min-[60rem]:grid-cols-[fit-content(16rem)_minmax(0,1fr)_fit-content(16rem)]"
 	>
-		<p class="md:col-span-3">{project.year}</p>
+		<p class="@2xl:col-span-2 @min-[60rem]:col-span-3">{project.year}</p>
 
-		<div use:shrinkwrap class="md:w-(--shrinkwrap)">
+		<div use:shrinkwrap class="@2xl:row-span-2 @2xl:w-(--shrinkwrap) @min-[60rem]:row-span-1">
 			<h1 class="text-[1.75rem] leading-tight font-semibold">
 				{#each titleParts as part, i (i)}{#if part.italic}<em class="font-sans text-[0.75em]"
 							>{part.text}</em
@@ -72,7 +75,8 @@
 
 		<p class="text-pretty">{project.description}</p>
 
-		<dl>
+		<!-- mt-6 on top of the 4px row gap matches the 28px column gap. -->
+		<dl class="@2xl:col-start-2 @2xl:mt-6 @min-[60rem]:col-start-auto @min-[60rem]:mt-0">
 			{#each credits as credit (credit.label)}
 				<div>
 					<dt class="inline font-semibold">{credit.label}</dt>
